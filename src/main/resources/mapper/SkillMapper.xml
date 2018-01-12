@@ -1,0 +1,45 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="online.qingshixun.module.skill.dao.SkillDaoMyBatis">
+
+	<!-- 获取专业技能的信息列表 -->
+	<select id="getSkills" resultType="SkillDTO">
+		SELECT
+			sk.id,
+			sk.name,
+			sk.level
+		FROM
+			t_skill sk
+	</select>
+	
+	<!-- 根据ID获取专业技能的信息 -->
+	<select id="getSkill" resultType="SkillDTO">
+		SELECT
+			sk.id,
+			sk.name,
+			sk.level		
+		FROM
+			t_skill sk
+		WHERE
+			sk.id IN (${skillIds})
+	</select>
+	
+	<!-- 新增或更新专业技能的信息，并填id -->
+	<insert id="saveOrUpdate" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO t_skill (
+			id,
+			name,
+			level
+		)
+		VALUES
+		(
+			#{id},
+			#{name},
+			#{level}
+		)
+		ON DUPLICATE KEY UPDATE
+			id = #{id},
+			name = #{name},
+			level = #{level}
+	</insert>
+</mapper>
